@@ -8,6 +8,7 @@ let tie
 /*------------------------ Cached Element References ------------------------*/
 const squareEls = document.querySelectorAll('.sqr')
 const messageEl = document.getElementById('message')
+const resetButtonEl = document.getElementById('reset')
 const winningCombos = [
 [0, 1, 2],
 [3, 4, 5],
@@ -24,7 +25,7 @@ const winningCombos = [
 init()
 
 function init() {
-board = ['', '🌼', '', '','🌸','','','','']
+board = ['', '', '', '','','','','','']
 turn = 'X'
 winner = false
 tie = false
@@ -39,11 +40,11 @@ function render() {
 
 function updateBoard() {
 board.forEach((cell, idx) => {
-        if (cell === '🌼') { 
-            squareEls[idx].textContent = '🌼'
+        if (cell === 'X') { 
+            squareEls[idx].textContent = 'X'
             squareEls[idx].style.backgroundColor = 'lightpink'
-        } else if (cell === '🌸') {
-            squareEls[idx].textContent = '🌸'
+        } else if (cell === 'O') {
+            squareEls[idx].textContent = 'O'
             squareEls[idx].style.backgroundColor = "lightblue";
         } else {
             squareEls[idx].textContent = ''
@@ -62,7 +63,59 @@ function updateMessage() {
 }
 
 function handleClick (event) {
+    console.log(event.target)
+    const squareIndex = parseInt(event.target.id)
+    if (board[squareIndex] === 'X' || board[squareIndex] === 'O' || winner) {
+        return
+    }
+    placePiece(squareIndex)
+    checkForWinner()
+    checkForTie()
+    switchPlayerTurn()
+    render()
+}
 
+function placePiece(index) {
+    board[index] = turn
+    console.log(board)
+}
+
+function checkForWinner() {
+    if (
+      (board[0] !== "" && board[0] === board[1] && board[0] === board[2]) ||
+      (board[3] !== "" && board[3] === board[4] && board[3] === board[5]) ||
+      (board[6] !== "" && board[6] === board[7] && board[6] === board[8]) ||
+      (board[0] !== "" && board[0] === board[3] && board[0] === board[6]) ||
+      (board[1] !== '' && board[1] === board[4] && board[1] === board[7]) ||
+      (board[2] !== '' && board[2] === board[5] && board[2] === board[8]) ||
+      (board[0] !== "" && board[0] === board[4] && board[0] === board[8]) ||
+      (board[2] !== '' && board[2] === board[4] && board[2] === board[6])
+    ) {
+      winner = true;
+    }
 }
  
+function checkForTie() {
+    if (winner) {
+        return
+    }
+    if (!board.includes('')) {
+        tie = true
+    }
+}
 /*----------------------------- Event Listeners -----------------------------*/
+squareEls.forEach((squareEl) => {
+    squareEl.addEventListener('click',handleClick)
+})
+
+function switchPlayerTurn() {
+    if (winner) {
+        return
+    }
+    if (turn === 'X') {
+        turn = 'O'
+    } else {
+        turn = 'X'
+    }
+}
+resetButtonEl.addEventListener('click', init)
