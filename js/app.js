@@ -20,13 +20,12 @@ const winningCombos = [
 [2, 4, 6]
 ]
 
-
 /*-------------------------------- Functions --------------------------------*/
 init()
 
 function init() {
 board = ['', '', '', '','','','','','']
-turn = 'X'
+turn = '🌼'
 winner = false
 tie = false
 render()
@@ -40,11 +39,11 @@ function render() {
 
 function updateBoard() {
 board.forEach((cell, idx) => {
-        if (cell === 'X') { 
-            squareEls[idx].textContent = 'X'
+        if (cell === '🌼') { 
+            squareEls[idx].textContent = '🌼'
             squareEls[idx].style.backgroundColor = 'lightpink'
-        } else if (cell === 'O') {
-            squareEls[idx].textContent = 'O'
+        } else if (cell === '🌸') {
+            squareEls[idx].textContent = '🌸'
             squareEls[idx].style.backgroundColor = "lightblue";
         } else {
             squareEls[idx].textContent = ''
@@ -56,7 +55,7 @@ function updateMessage() {
     if (!winner && !tie) {
         messageEl.textContent = `It is ${turn}'s turn`
     } else if (!winner && tie) {
-        messageEl.textContent = `Cat game`;
+        messageEl.textContent = `Cat game!! 😼💨`;
     } else {
         messageEl.textContent = `${turn} wins the game!`;
     }
@@ -65,7 +64,7 @@ function updateMessage() {
 function handleClick (event) {
     console.log(event.target)
     const squareIndex = parseInt(event.target.id)
-    if (board[squareIndex] === 'X' || board[squareIndex] === 'O' || winner) {
+    if (board[squareIndex] === '🌼' || board[squareIndex] === '🌸' || winner) {
         return
     }
     placePiece(squareIndex)
@@ -112,10 +111,10 @@ function switchPlayerTurn() {
     if (winner) {
         return
     }
-    if (turn === 'X') {
-        turn = 'O'
+    if (turn === '🌼') {
+        turn = '🌸'
     } else {
-        turn = 'X'
+        turn = '🌼'
     }
 }
 resetButtonEl.addEventListener('click', init)
