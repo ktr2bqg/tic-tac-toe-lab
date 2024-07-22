@@ -33,24 +33,25 @@ render()
 
 function render() {
     updateBoard()
-    updateMessage()
+    //updateMessage()
 }
 
 
-function updateBoard() {
+ function updateBoard() {
 board.forEach((cell, idx) => {
         if (cell === '🌼') { 
             squareEls[idx].textContent = '🌼'
-            squareEls[idx].style.backgroundColor = 'lightpink'
+            squareEls[idx].style.backgroundColor = '#c1666b';
         } else if (cell === '🌸') {
             squareEls[idx].textContent = '🌸'
-            squareEls[idx].style.backgroundColor = "lightblue";
+            squareEls[idx].style.backgroundColor = "#d4b483";
         } else {
             squareEls[idx].textContent = ''
         }
     })
 }
 
+/*
 function updateMessage() {
     if (!winner && !tie) {
         messageEl.textContent = `It is ${turn}'s turn`
@@ -60,7 +61,7 @@ function updateMessage() {
         messageEl.textContent = `${turn} wins the game!`;
     }
 }
-
+*/
 function handleClick (event) {
     console.log(event.target)
     const squareIndex = parseInt(event.target.id)
@@ -69,7 +70,7 @@ function handleClick (event) {
     }
     placePiece(squareIndex)
     checkForWinner()
-    checkForTie()
+    //checkForTie()
     switchPlayerTurn()
     render()
 }
@@ -78,6 +79,7 @@ function placePiece(index) {
     board[index] = turn
     console.log(board)
 }
+
 
 function checkForWinner() {
     if (
@@ -91,9 +93,11 @@ function checkForWinner() {
       (board[2] !== '' && board[2] === board[4] && board[2] === board[6])
     ) {
       winner = true;
+      confetti.start(2000)
     }
 }
- 
+
+/*
 function checkForTie() {
     if (winner) {
         return
@@ -102,6 +106,7 @@ function checkForTie() {
         tie = true
     }
 }
+    */
 /*----------------------------- Event Listeners -----------------------------*/
 squareEls.forEach((squareEl) => {
     squareEl.addEventListener('click',handleClick)
@@ -117,4 +122,6 @@ function switchPlayerTurn() {
         turn = '🌼'
     }
 }
-resetButtonEl.addEventListener('click', init)
+
+/*
+resetButtonEl.addEventListener('click', init)*/
